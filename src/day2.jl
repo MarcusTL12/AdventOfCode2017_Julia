@@ -17,6 +17,7 @@ function part2()
 
                 if r == 0
                     res = q
+                    break
                 end
             end
 
