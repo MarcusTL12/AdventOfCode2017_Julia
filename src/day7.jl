@@ -22,9 +22,7 @@ function parse_input(filename)
     tree
 end
 
-function part1()
-    tree = parse_input("input/day7/input")
-
+function get_root(tree)
     leaves = Set{String}()
     sizehint!(leaves, length(tree))
 
@@ -33,4 +31,16 @@ function part1()
     end
 
     first(setdiff(keys(tree), leaves))
+end
+
+function part1()
+    get_root(parse_input("input/day7/input"))
+end
+
+function part2()
+    tree = parse_input("input/day7/ex1")
+
+    disc_weights = sizehint!(Dict{String, Int}(), length(tree))
+
+
 end
