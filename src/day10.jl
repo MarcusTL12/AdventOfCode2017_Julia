@@ -1,3 +1,4 @@
+using CircularArrays
 
 function part1()
     n = 256
@@ -25,33 +26,22 @@ end
 function knot_hash(s)
     lengths = append!([Int(c) for c in s], [17, 31, 73, 47, 23])
 
-    nums = collect(0:255)
+    nums = CircularVector(collect(0:255))
 
     n = 256
 
     skipsize = 0
-    startind = 1
+    curpos = 1
 
     for _ = 1:64
         for l in lengths
-            nums[1:l] = @view nums[l:-1:1]
-            startind -= skipsize + l
-            for _ = 1:skipsize+l
-                push!(nums, popfirst!(nums))
-            end
+            reverse!(@view nums[curpos:curpos + l - 1])
+            curpos += l + skipsize
             skipsize += 1
         end
     end
 
-    startind = (startind - 1) % n + n + 1
-
-    for _ = 2:startind
-        pushfirst!(nums, pop!(nums))
-    end
-
-    densehash = [UInt8(reduce(⊻, @view nums[i*16+1:(i+1)*16])) for i = 0:15]
-
-    bytes2hex(densehash)
+    bytes2hex([UInt8(reduce(⊻, @view nums[i*16+1:(i+1)*16])) for i = 0:15])
 end
 
 function part2()
