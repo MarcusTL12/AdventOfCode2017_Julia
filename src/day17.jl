@@ -24,7 +24,7 @@ function insert_list!(list, i, val)
 end
 
 function part2()
-    buf = [(Int32(0), Int32(1), Int32(1))]
+    buf = [(0, 1, 1)]
 
     inp = 355
 
@@ -37,6 +37,5 @@ function part2()
         cur_pos = insert_list!(buf, cur_pos, i)
     end
 
-    i = findfirst(x -> x[1] == 0, buf)
-    buf[buf[i][3]]
+    buf[buf[1][3]]
 end
